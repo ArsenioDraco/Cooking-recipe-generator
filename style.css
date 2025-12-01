@@ -47,3 +47,21 @@ body{
   color:var(--muted);
   font-size:14px;
 }
+/* controls */
+.controls{
+  display:flex;
+  gap:14px;
+  align-items:center;
+  margin-bottom:18px;
+  flex-wrap:wrap;
+}
+.small{font-size:13px;color:var(--muted)}
+input[type="text"]{
+  margin-left:8px;
+  padding:8px 10px;
+  border-radius:8px;
+  border:1px solid #e6eef9;
+  min-width:160px;
+  outline:none;
+  background:#fff;
+}
