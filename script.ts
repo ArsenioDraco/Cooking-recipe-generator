@@ -44,3 +44,12 @@ function seededRandom(seed: number) {
     return (s - 1) / 2147483646;
   };
 }
+function randomChoice<T>(arr: T[], rand = Math.random): T {
+  return arr[Math.floor(rand() * arr.length)];
+}
+
+function pickBase(ingredients: Ingredient[], rand = Math.random): Ingredient {
+  const proteins = ingredients.filter(i => i.type === "protein");
+  return randomChoice(proteins, rand);
+}
+
