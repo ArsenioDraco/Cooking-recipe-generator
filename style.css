@@ -93,3 +93,26 @@ input[type="text"]{
   font-size:24px;
   margin:0 0 6px 0;
 }
+.meta-row{margin:10px 0 16px;display:flex;gap:8px;flex-wrap:wrap}
+.pill{
+  padding:6px 10px;
+  background:#f1f5f9;
+  border-radius:999px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+/* panels */
+.panel{margin-top:12px}
+.panel-title{margin:0 0 8px 0;font-size:15px}
+.list{margin:0;padding-left:20px;color:#0f172a}
+.list li{margin-bottom:8px}
+
+/* footer */
+.footer-note{margin-top:18px;color:var(--muted);font-size:13px}
+
+/* responsiveness */
+@media (max-width:640px){
+  :root{--headline-size:28px}
+  .controls{flex-direction:column;align-items:flex-start}
+}
