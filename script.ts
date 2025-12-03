@@ -200,5 +200,35 @@ regenBtn.addEventListener("click", ()=>{
     lastRecipe = newRecipe;
     renderRecipe(newRecipe);
   });
+downloadBtn.addEventListener("click", ()=>{
+    if (!lastRecipe) return alert("Generate a recipe first.");
+    const lines: string[] = [];
+    lines.push(lastRecipe.name);
+    lines.push("");
+    lines.push("Cuisine: " + lastRecipe.cuisine);
+    lines.push("Method: " + lastRecipe.method);
+    lines.push("");
+    lines.push("Ingredients:");
+    lastRecipe.ingredients.forEach(i=>lines.push("- " + i.name));
+    lines.push("");
+    lines.push("Instructions:");
+    lastRecipe.steps.forEach((s, idx)=>lines.push(`${idx+1}. ${s.instruction}`));
+    const blob = new Blob([lines.join("\n")], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${lastRecipe.name.replace(/\s+/g,"_")}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  // auto-generate one on load
+  const initial = makeRecipe();
+  renderRecipe(initial);
+}
+
+document.addEventListener("DOMContentLoaded", init);
 
 
