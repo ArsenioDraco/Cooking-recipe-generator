@@ -106,4 +106,35 @@ function buildSteps(base: Ingredient, chosen: Ingredient[], method: string): Rec
 
   return steps;
 }
+function recipeName(method: string, base: Ingredient) {
+  const capitalMethod = method.charAt(0).toUpperCase() + method.slice(1);
+  return `${capitalMethod} ${base.name}`;
+}
+
+async function init() {
+  const ingredients = await loadIngredients();
+
+  // if fetch failed and fallback empty, try embed from JSON via import-less approach
+  if (!ingredients || ingredients.length === 0) {
+    console.error("No ingredients available.");
+    return;
+  }
+
+  const generateBtn = document.getElementById("generateBtn") as HTMLButtonElement;
+  const regenBtn = document.getElementById("regenBtn") as HTMLButtonElement;
+  const downloadBtn = document.getElementById("downloadBtn") as HTMLButtonElement;
+  const seedInput = document.getElementById("seed") as HTMLInputElement;
+
+  const titleEl = document.getElementById("recipeTitle")!;
+  const ingredientList = document.getElementById("ingredientList")!;
+  const stepsList = document.getElementById("stepsList")!;
+  const cuisineTag = document.getElementById("cuisineTag")!;
+  const methodTag = document.getElementById("methodTag")!;
+
+  let lastRecipe: Recipe | null = null;
+
+  function renderRecipe(recipe: Recipe) {
+    titleEl.textContent = recipe.name;
+    cuisineTag.textContent = recipe.cuisine;
+    methodTag.textContent = recipe.method;
 
