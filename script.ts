@@ -52,4 +52,19 @@ function pickBase(ingredients: Ingredient[], rand = Math.random): Ingredient {
   const proteins = ingredients.filter(i => i.type === "protein");
   return randomChoice(proteins, rand);
 }
+function chooseCompatible(base: Ingredient, all: Ingredient[], count = 3, rand = Math.random) {
+  const pool = all.filter(i => i.name !== base.name && base.compatibleWith.includes(i.name));
+  // If not enough compatible, broaden to same cuisine
+  let chosen: Ingredient[] = [];
+  if (pool.length >= count) {
+    const shuffled = pool.slice().sort(()=>0.5 - rand());
+    chosen = shuffled.slice(0, count);
+  } else {
+    const sameCuisine = all.filter(i => i.name !== base.name && i.cuisine.some(c=>base.cuisine.includes(c)));
+    const merged = Array.from(new Set([...pool, ...sameCuisine]));
+    const shuffled = merged.slice().sort(()=>0.5 - rand());
+    chosen = shuffled.slice(0, count);
+  }
+  return chosen;
+}
 
