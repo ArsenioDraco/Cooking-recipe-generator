@@ -183,4 +183,22 @@ async function init() {
     const r = makeRecipe(seedVal);
     renderRecipe(r);
   });
+regenBtn.addEventListener("click", ()=>{
+    if (!lastRecipe) {
+      const r = makeRecipe(seedInput.value);
+      renderRecipe(r);
+      return;
+    }
+    // regenerate compatible ingredients but keep base & method
+    const rand = seedInput.value ? seededRandom(seedInput.value.length) : Math.random;
+    const newCompat = chooseCompatible(lastRecipe.ingredients[0], ingredients, 3, rand as any);
+    const newRecipe: Recipe = {
+      ...lastRecipe,
+      ingredients: [lastRecipe.ingredients[0], ...newCompat],
+      steps: buildSteps(lastRecipe.ingredients[0], newCompat, lastRecipe.method)
+    };
+    lastRecipe = newRecipe;
+    renderRecipe(newRecipe);
+  });
+
 
