@@ -164,4 +164,23 @@ async function init() {
     const compat = chooseCompatible(base, ingredients, 3, rand);
     // pick method: prefer base.methods
     const method = randomChoice(base.methods.concat("pan-fry"), rand);
+ const ingreds = [base, ...compat];
+    const steps = buildSteps(base, compat, method);
+
+    const rec: Recipe = {
+      name: recipeName(method, base),
+      cuisine: base.cuisine[0] || "Global",
+      method,
+      ingredients: ingreds,
+      steps
+    };
+    lastRecipe = rec;
+    return rec;
+  }
+
+  generateBtn.addEventListener("click", ()=>{
+    const seedVal = seedInput.value;
+    const r = makeRecipe(seedVal);
+    renderRecipe(r);
+  });
 
