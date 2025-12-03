@@ -137,4 +137,31 @@ async function init() {
     titleEl.textContent = recipe.name;
     cuisineTag.textContent = recipe.cuisine;
     methodTag.textContent = recipe.method;
+  ingredientList.innerHTML = "";
+    recipe.ingredients.forEach(ing => {
+      const li = document.createElement("li");
+      li.textContent = ing.name;
+      ingredientList.appendChild(li);
+    });
+
+    stepsList.innerHTML = "";
+    recipe.steps.forEach(s => {
+      const li = document.createElement("li");
+      li.textContent = s.instruction;
+      stepsList.appendChild(li);
+    });
+  }
+
+  function makeRecipe(seedText?: string): Recipe {
+    let rand = Math.random;
+    if (seedText && seedText.trim().length) {
+      // convert seed text to numeric
+      const n = Array.from(seedText).reduce((acc, ch)=>acc + ch.charCodeAt(0), 0);
+      rand = seededRandom(n);
+    }
+
+    const base = pickBase(ingredients, rand);
+    const compat = chooseCompatible(base, ingredients, 3, rand);
+    // pick method: prefer base.methods
+    const method = randomChoice(base.methods.concat("pan-fry"), rand);
 
