@@ -67,4 +67,24 @@ function chooseCompatible(base: Ingredient, all: Ingredient[], count = 3, rand =
   }
   return chosen;
 }
+function buildSteps(base: Ingredient, chosen: Ingredient[], method: string): RecipeStep[] {
+  const steps: RecipeStep[] = [];
+  const main = base.name;
+  // Preheat/prepare step
+  if (method === "roast" || method === "bake") {
+    steps.push({ instruction: `Preheat the oven to 375°F (190°C).` });
+  } else if (method === "pan-fry" || method === "pan-frying" || method === "pan-fry") {
+    steps.push({ instruction: `Heat a skillet over medium-high heat and add 1–2 tbsp of oil or butter.` });
+  } else {
+    steps.push({ instruction: `Prepare your pan or oven for ${method}.` });
+  }
+
+  // Prep step
+  steps.push({ instruction: `Season the ${main} with salt and pepper. If available, add a squeeze of lemon or a drizzle of soy sauce.` });
+
+  // Add any quick-prepare ingredients
+  const vegs = chosen.filter(i => i.type === "vegetable" || i.type === "starch");
+  if (vegs.length) {
+    steps.push({ instruction: `Prepare the side items: ${vegs.map(v=>v.name).join(", ")} (wash, peel, chop as needed).` });
+  }
 
