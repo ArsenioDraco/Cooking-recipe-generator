@@ -135,4 +135,39 @@ function seededRandom(seed){
     var capitalMethod = method.charAt(0).toUpperCase() + method.slice(1);
     return capitalMethod + " " + base.name;
   }
+ function init(){
+    loadIngredients().then(function(ingredients){
+      if(!ingredients || !ingredients.length){
+        console.error("No ingredients available.");
+        return;
+      }
+      var generateBtn = document.getElementById("generateBtn");
+      var regenBtn = document.getElementById("regenBtn");
+      var downloadBtn = document.getElementById("downloadBtn");
+      var seedInput = document.getElementById("seed");
+      var titleEl = document.getElementById("recipeTitle");
+      var ingredientList = document.getElementById("ingredientList");
+      var stepsList = document.getElementById("stepsList");
+      var cuisineTag = document.getElementById("cuisineTag");
+      var methodTag = document.getElementById("methodTag");
+      var lastRecipe = null;
+
+      function renderRecipe(recipe){
+        titleEl.textContent = recipe.name;
+        cuisineTag.textContent = recipe.cuisine;
+        methodTag.textContent = recipe.method;
+        ingredientList.innerHTML = "";
+        recipe.ingredients.forEach(function(ing){
+          var li = document.createElement("li");
+          li.textContent = ing.name;
+          ingredientList.appendChild(li);
+        });
+        stepsList.innerHTML = "";
+        recipe.steps.forEach(function(s){
+          var li = document.createElement("li");
+          li.textContent = s.instruction;
+          stepsList.appendChild(li);
+        });
+      }
+
 
