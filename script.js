@@ -116,4 +116,23 @@ function seededRandom(seed){
     if(vegs.length){
       steps.push({ instruction: "Prepare the side items: " + vegs.map(function(v){ return v.name; }).join(", ") + " (wash, peel, chop as needed)." });
     }
+ if(method === "roast" || method === "bake"){
+      steps.push({ instruction: "Roast the " + main + " in the oven for 20–40 minutes (depending on thickness) until cooked through." });
+      if(vegs.length) steps.push({ instruction: "Roast the " + vegs.map(function(v){ return v.name; }).join(", ") + " alongside for 20–30 minutes until tender." });
+    } else if(method === "pan-fry" || method === "pan-frying"){
+      steps.push({ instruction: "Pan-fry the " + main + " on medium-high heat, about 3–6 minutes per side until golden and cooked through." });
+      if(vegs.length) steps.push({ instruction: "Sauté the " + vegs.map(function(v){ return v.name; }).join(", ") + " in the same pan until tender." });
+    } else {
+      steps.push({ instruction: "Cook the " + main + " using " + method + " until done." });
+    }
+    var garnish = chosen.find(function(i){ return i.type === "herb" || i.type === "dairy" || i.type === "fruit"; });
+    if(garnish) steps.push({ instruction: "Finish with " + garnish.name + " — a little goes a long way." });
+    steps.push({ instruction: "Serve warm. Enjoy." });
+    return steps;
+  }
+
+  function recipeName(method, base){
+    var capitalMethod = method.charAt(0).toUpperCase() + method.slice(1);
+    return capitalMethod + " " + base.name;
+  }
 
