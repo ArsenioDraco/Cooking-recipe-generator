@@ -214,5 +214,21 @@ function seededRandom(seed){
         lastRecipe = newRecipe;
         renderRecipe(newRecipe);
       });
+downloadBtn.addEventListener("click", function(){
+        if(!lastRecipe) return alert("Generate a recipe first.");
+        var lines = [];
+        lines.push(lastRecipe.name);
+        lines.push("");
+        lines.push("Cuisine: " + lastRecipe.cuisine);
+        lines.push("Method: " + lastRecipe.method);
+        lines.push("");
+        lines.push("Ingredients:");
+        lastRecipe.ingredients.forEach(function(i){ lines.push("- " + i.name); });
+        lines.push("");
+        lines.push("Instructions:");
+        lastRecipe.steps.forEach(function(s, idx){ lines.push((idx+1) + ". " + s.instruction); });
+        var blob = new Blob([lines.join("\n")], { type: "text/plain" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
 
 
