@@ -169,5 +169,32 @@ function seededRandom(seed){
           stepsList.appendChild(li);
         });
       }
+  function makeRecipe(seedText){
+        var rand = Math.random;
+        if(seedText && seedText.trim().length){
+          var n = Array.from(seedText).reduce(function(acc, ch){ return acc + ch.charCodeAt(0); }, 0);
+          rand = seededRandom(n);
+        }
+        var base = pickBase(ingredients, rand);
+        var compat = chooseCompatible(base, ingredients, 3, rand);
+        var method = randomChoice(base.methods.concat("pan-fry"), rand);
+        var ingreds = [base].concat(compat);
+        var steps = buildSteps(base, compat, method);
+        var rec = {
+          name: recipeName(method, base),
+          cuisine: base.cuisine[0] || "Global",
+          method: method,
+          ingredients: ingreds,
+          steps: steps
+        };
+        lastRecipe = rec;
+        return rec;
+      }
+
+      generateBtn.addEventListener("click", function(){
+        var seedVal = seedInput.value;
+        var r = makeRecipe(seedVal);
+        renderRecipe(r);
+      });
 
 
