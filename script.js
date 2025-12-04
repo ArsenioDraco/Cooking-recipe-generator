@@ -196,5 +196,23 @@ function seededRandom(seed){
         var r = makeRecipe(seedVal);
         renderRecipe(r);
       });
+ regenBtn.addEventListener("click", function(){
+        if(!lastRecipe){
+          var r = makeRecipe(seedInput.value);
+          renderRecipe(r);
+          return;
+        }
+        var rand = seedInput.value ? seededRandom(seedInput.value.length) : Math.random;
+        var newCompat = chooseCompatible(lastRecipe.ingredients[0], ingredients, 3, rand);
+        var newRecipe = {
+          name: lastRecipe.name,
+          cuisine: lastRecipe.cuisine,
+          method: lastRecipe.method,
+          ingredients: [lastRecipe.ingredients[0]].concat(newCompat),
+          steps: buildSteps(lastRecipe.ingredients[0], newCompat, lastRecipe.method)
+        };
+        lastRecipe = newRecipe;
+        renderRecipe(newRecipe);
+      });
 
 
