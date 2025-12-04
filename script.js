@@ -61,4 +61,44 @@
       return FALLBACK_INGREDIENTS;
     });
   }
+function seededRandom(seed){
+    var s = seed % 2147483647;
+    if(s <= 0) s += 2147483646;
+    return function(){
+      s = (s * 16807) % 2147483647;
+      return (s - 1) / 2147483646;
+    };
+  }
+
+  function randomChoice(arr, rand){
+    if(rand === void 0) rand = Math.random;
+    return arr[Math.floor(rand() * arr.length)];
+  }
+
+  function pickBase(ingredients, rand){
+    if(rand === void 0) rand = Math.random;
+    var proteins = ingredients.filter(function(i){ return i.type === "protein"; });
+    return randomChoice(proteins, rand);
+  }
+
+  function chooseCompatible(base, all, count, rand){
+    if(count === void 0) count = 3;
+    if(rand === void 0) rand = Math.random;
+    var pool = all.filter(function(i){ return i.name !== base.name && base.compatibleWith.includes(i.name); });
+    var chosen = [];
+    if(pool.length >= count){
+      var shuffled = pool.slice().sort(function(){ return 0.5 - rand(); });
+      chosen = shuffled.slice(0, count);
+    } else {
+      var sameCuisine = all.filter(function(i){ return i.name !== base.name && i.cuisine.some(function(c){ return base.cuisine.includes(c); }); });
+      var mergedNames = {};
+      var merged = [];
+      pool.concat(sameCuisine).forEach(function(x){
+        if(!mergedNames[x.name]) { mergedNames[x.name] = true; merged.push(x); }
+      });
+      var shuffled2 = merged.slice().sort(function(){ return 0.5 - rand(); });
+      chosen = shuffled2.slice(0, count);
+    }
+    return chosen;
+  }
 
