@@ -101,4 +101,19 @@ function seededRandom(seed){
     }
     return chosen;
   }
+ function buildSteps(base, chosen, method){
+    var steps = [];
+    var main = base.name;
+    if(method === "roast" || method === "bake"){
+      steps.push({ instruction: "Preheat the oven to 375°F (190°C)." });
+    } else if(method === "pan-fry" || method === "pan-frying"){
+      steps.push({ instruction: "Heat a skillet over medium-high heat and add 1–2 tbsp of oil or butter." });
+    } else {
+      steps.push({ instruction: "Prepare your pan or oven for " + method + "." });
+    }
+    steps.push({ instruction: "Season the " + main + " with salt and pepper. If available, add a squeeze of lemon or a drizzle of soy sauce." });
+    var vegs = chosen.filter(function(i){ return i.type === "vegetable" || i.type === "starch"; });
+    if(vegs.length){
+      steps.push({ instruction: "Prepare the side items: " + vegs.map(function(v){ return v.name; }).join(", ") + " (wash, peel, chop as needed)." });
+    }
 
