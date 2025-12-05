@@ -56,13 +56,14 @@ If `ingredients.json` fails to load, a fallback ingredient list ensures the gene
 
 ## File Structure
 
-| File               | Description                                                                                          |
-| ------------------ | ---------------------------------------------------------------------------------------------------- |
-| `index.html`       | Main HTML interface for the recipe generator.                                                        |
-| `style.css`        | Styling for a clean, readable layout.                                                                |
-| `script.ts`        | TypeScript logic handling ingredient selection, recipe generation, and step construction.            |
-| `script.js`        | Compiled JavaScript from `script.ts` for browser execution.                                          |
-| `ingredients.json` | JSON database of ingredients, including type, flavor profile, compatible items, and cooking methods. |
+| File               | Description                                                                                   |
+| ------------------ | --------------------------------------------------------------------------------------------- |
+| `index.html`       | Main HTML interface.                                                                          |
+| `style.css`        | Styles for clean, readable layout.                                                            |
+| `script.ts`        | TypeScript logic for ingredient selection, recipe generation, and steps.                      |
+| `script.js`        | Compiled JavaScript for browser execution.                                                    |
+| `ingredients.json` | Ingredient database with type, flavor profile, compatibility, and methods.                    |
+| `tsconfig.json`    | TypeScript configuration: compiler options, output directory, strictness, and included files. |
 
 ## Personal Note
 
