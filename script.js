@@ -230,5 +230,21 @@ downloadBtn.addEventListener("click", function(){
         var blob = new Blob([lines.join("\n")], { type: "text/plain" });
         var url = URL.createObjectURL(blob);
         var a = document.createElement("a");
+a.href = url;
+        a.download = (lastRecipe.name.replace(/\s+/g,"_")) + ".txt";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      });
+
+      // initial
+      var initial = makeRecipe();
+      renderRecipe(initial);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", init);
+})();
 
 
