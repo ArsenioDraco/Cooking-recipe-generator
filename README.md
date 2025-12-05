@@ -54,6 +54,8 @@ If `ingredients.json` fails to load, a fallback ingredient list ensures the gene
 * Clear separation of title, cuisine, method, ingredients, and steps.
 * Minimalistic styling ensures readability and functional clarity.
 
+## File Structure
+
 | File               | Description                                                                                          |
 | ------------------ | ---------------------------------------------------------------------------------------------------- |
 | `index.html`       | Main HTML interface for the recipe generator.                                                        |
